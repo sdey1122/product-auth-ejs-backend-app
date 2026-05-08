@@ -1,0 +1,137 @@
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
+
+  <div class="container">
+
+    <!-- BRAND -->
+    <a class="navbar-brand fw-semibold" href="/">
+      <h1>WebStore</h1>
+    </a>
+
+    <!-- TOGGLE -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- NAV -->
+    <div class="collapse navbar-collapse" id="navMenu">
+
+      <!-- LEFT -->
+      <ul class="navbar-nav me-auto">
+
+        <li class="nav-item">
+          <a href="/" class="nav-link">Home</a>
+        </li>
+
+        <% if (typeof user !== "undefined" && user) { %>
+          <li class="nav-item">
+            <a href="/products" class="nav-link">Products</a>
+          </li>
+
+          <% if (user.role === "admin") { %>
+            <li class="nav-item">
+              <a href="/admin/dashboard" class="nav-link admin-link">
+                Admin
+              </a>
+            </li>
+          <% } %>
+        <% } %>
+
+      </ul>
+
+      <!-- RIGHT -->
+      <div class="d-flex align-items-center gap-2">
+
+        <% if (typeof user !== "undefined" && user) { %>
+
+          <span class="user-info">
+            <i class="bi bi-person-circle me-1"></i> <%= user.name %>
+          </span>
+
+          <a href="/auth/logout" class="btn btn-sm btn-danger">
+            <i class="bi bi-box-arrow-right"></i>
+          </a>
+
+        <% } else { %>
+
+          <a href="/login" class="btn btn-outline-light btn-sm">
+            Login
+          </a>
+
+          <a href="/register" class="btn btn-gradient btn-sm">
+            Register
+          </a>
+
+        <% } %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<!-- NAVBAR CSS -->
+<style>
+  .custom-navbar {
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .navbar-brand {
+    font-size: 18px;
+  }
+
+  .nav-link {
+    color: #cbd5e1 !important;
+    transition: 0.25s;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: #a5b4fc !important;
+  }
+
+  /* ACTIVE UNDERLINE EFFECT */
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    transition: 0.3s;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* ADMIN LINK */
+  .admin-link {
+    color: #fbbf24 !important;
+  }
+
+  .admin-link:hover {
+    color: #facc15 !important;
+  }
+
+  /* USER INFO */
+  .user-info {
+    font-size: 14px;
+    color: #e2e8f0;
+  }
+
+  /* GRADIENT BUTTON */
+  .btn-gradient {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: #fff;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  }
+</style>

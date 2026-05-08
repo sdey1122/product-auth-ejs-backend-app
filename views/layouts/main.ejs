@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title><%= typeof title !== "undefined" ? title : "WebStore" %></title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- GOOGLE FONT-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-main: #0f172a;
+        --card-bg: #1e293b;
+        --input-bg: #334155;
+        --border-color: #334155;
+        --text-main: #e2e8f0;
+        --text-muted: #94a3b8;
+        --primary: #6366f1;
+      }
+
+      * {
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background: var(--bg-main);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      /* GLOBAL SCROLLBAR (optional premium touch) */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #475569;
+        border-radius: 10px;
+      }
+
+      /* GLOBAL BUTTON STYLE */
+      .btn-gradient {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border: none;
+        color: #fff;
+      }
+
+      .btn-gradient:hover {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      }
+
+      /* GLOBAL CARD */
+      .card-custom {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+      }
+
+      /* GLOBAL INPUT */
+      .form-control,
+      .form-select {
+        background: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+        background: var(--input-bg);
+        color: #fff;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <%- include("../partials/navbar") %>
+
+    <!-- FLASH -->
+    <div class="container mt-3"><%- include("../partials/flash") %></div>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <div class="container-fluid px-0"><%- body %></div>
+    </main>
+
+    <!-- FOOTER -->
+    <%- include("../partials/footer") %>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

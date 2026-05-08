@@ -1,0 +1,227 @@
+<style>
+  :root {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --input-bg: #334155;
+    --border-color: #334155;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #6366f1;
+  }
+
+  .container-box {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+  .page-title {
+    font-weight: 600;
+  }
+
+  /* FILTER */
+  .filter-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  }
+
+  .form-control,
+  .form-select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(99,102,241,0.3);
+    background: var(--input-bg);
+    color: #fff;
+  }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: #fff;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  }
+
+  /* CARD */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    transition: 0.3s;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .product-img {
+    height: 180px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 14px;
+  }
+
+  .product-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .category {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .price {
+    font-weight: 600;
+    color: #22c55e;
+  }
+
+  .btn-view {
+    border-radius: 20px;
+    padding: 5px 12px;
+  }
+
+  /* EMPTY */
+  .empty-box {
+    text-align: center;
+    margin-top: 60px;
+    color: var(--text-muted);
+  }
+</style>
+
+<div class="container-box">
+
+  <h3 class="page-title mb-4">
+    <i class="bi bi-cart me-2"></i> Products
+  </h3>
+
+  <!-- FILTERS -->
+  <form method="GET" action="/products" class="filter-box mb-4">
+
+    <div class="row g-2">
+
+      <!-- SEARCH -->
+      <div class="col-md-3">
+        <input 
+          type="text" 
+          name="search" 
+          class="form-control" 
+          placeholder="Search products..." 
+          value="<%= filters?.search || '' %>"
+        >
+      </div>
+
+      <!-- CATEGORY -->
+      <div class="col-md-2">
+        <input 
+          type="text" 
+          name="category" 
+          class="form-control" 
+          placeholder="Category" 
+          value="<%= filters?.category || '' %>"
+        >
+      </div>
+
+      <!-- SIZE -->
+      <div class="col-md-2">
+        <select name="size" class="form-select">
+          <option value="">Size</option>
+          <% ["S","M","L","XL"].forEach(s => { %>
+            <option value="<%= s %>" <%= filters?.size === s ? "selected" : "" %>>
+              <%= s %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- PRICE -->
+      <div class="col-md-2">
+        <input 
+          type="number" 
+          name="minPrice" 
+          class="form-control" 
+          placeholder="Min Price"
+          value="<%= filters?.minPrice || '' %>"
+        >
+      </div>
+
+      <div class="col-md-2">
+        <input 
+          type="number" 
+          name="maxPrice" 
+          class="form-control" 
+          placeholder="Max Price"
+          value="<%= filters?.maxPrice || '' %>"
+        >
+      </div>
+
+      <!-- BUTTON -->
+      <div class="col-md-1">
+        <button class="btn btn-gradient w-100">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+    </div>
+
+  </form>
+
+  <!-- GRID -->
+  <div class="row g-4">
+
+    <% if (!products || products.length === 0) { %>
+      <div class="empty-box">
+        <h5>No products found</h5>
+      </div>
+    <% } %>
+
+    <% products.forEach(product => { %>
+      <div class="col-md-4 col-lg-3">
+
+        <div class="card h-100">
+
+          <!-- IMAGE -->
+          <% if (product.image?.url) { %>
+            <img src="<%= product.image.url %>" class="product-img">
+          <% } %>
+
+          <div class="card-body">
+
+            <div class="product-name"><%= product.name %></div>
+
+            <div class="category">
+              <%= product.category || "" %>
+            </div>
+
+            <p class="price mt-1">₹<%= product.price %></p>
+
+            <a href="/products/<%= product.slug %>" class="btn btn-outline-light btn-sm btn-view mt-2">
+              View
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+    <% }) %>
+
+  </div>
+
+</div>

@@ -1,0 +1,149 @@
+<style>
+  :root {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --input-bg: #334155;
+    --border-color: #334155;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #6366f1;
+  }
+
+  .container-box {
+    max-width: 1050px;
+    margin: 60px auto;
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .product-img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+  }
+
+  .product-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .badge-custom {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+
+  .category {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 30px;
+    font-weight: 700;
+    color: #22c55e;
+  }
+
+  .stock {
+    color: var(--text-muted);
+  }
+
+  .size-box span {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    background: var(--input-bg);
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 25px;
+  }
+
+  .description {
+    color: #cbd5e1;
+    line-height: 1.6;
+  }
+
+  .btn-back {
+    border-radius: 30px;
+    padding: 10px 18px;
+  }
+</style>
+
+<div class="container-box">
+
+  <div class="row g-4 align-items-start">
+
+    <!-- IMAGE -->
+    <div class="col-md-6">
+      <% if (product.image?.url) { %>
+        <img src="<%= product.image.url %>" class="product-img">
+      <% } else { %>
+        <div class="text-center p-5 bg-dark rounded">No Image</div>
+      <% } %>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="col-md-6">
+
+      <h3 class="product-title"><%= product.name %></h3>
+
+      <!-- STATUS -->
+      <% if (product.status === "active") { %>
+        <span class="badge bg-success badge-custom">Active</span>
+      <% } else { %>
+        <span class="badge bg-warning text-dark badge-custom">Inactive</span>
+      <% } %>
+
+      <!-- CATEGORY -->
+      <p class="category mt-2">
+        <i class="bi bi-tag me-1"></i>
+        <%= product.category || "N/A" %>
+      </p>
+
+      <!-- PRICE -->
+      <p class="price mt-3">₹<%= product.price %></p>
+
+      <!-- STOCK -->
+      <p class="stock">
+        Stock: <%= product.stock %>
+      </p>
+
+      <!-- SIZE -->
+      <div class="section-title">Available Sizes</div>
+      <div class="size-box mt-2">
+        <% if (product.size && product.size.length > 0) { %>
+          <% product.size.forEach(s => { %>
+            <span><%= s %></span>
+          <% }) %>
+        <% } else { %>
+          <span>No sizes</span>
+        <% } %>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="section-title">Description</div>
+      <p class="description mt-2">
+        <%= product.description %>
+      </p>
+
+      <!-- BUTTON -->
+      <a href="/products" class="btn btn-outline-light btn-back mt-4">
+        <i class="bi bi-arrow-left me-1"></i> Back to Products
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

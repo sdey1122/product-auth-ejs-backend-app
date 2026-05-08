@@ -1,0 +1,152 @@
+<style>
+  :root {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #6366f1;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 100px 20px 70px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-weight: 700;
+  }
+
+  .hero span {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .btn-custom {
+    border-radius: 30px;
+    padding: 12px 26px;
+    font-weight: 500;
+  }
+
+  .btn-gradient {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    color: #fff;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  }
+
+  /* FEATURES */
+  .features {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .feature-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .feature-title {
+    font-weight: 600;
+  }
+
+  .feature-text {
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+</style>
+
+<!-- HERO -->
+<div class="hero">
+
+  <h1 class="display-4">
+    Welcome to <span>WebStore</span>
+  </h1>
+
+  <p class="mt-3">
+    Manage products, explore items, and experience a clean modern system built for performance and simplicity.
+  </p>
+
+  <% if (!user) { %>
+    <div class="mt-4">
+      <a href="/login" class="btn btn-gradient btn-custom me-2">
+        <i class="bi bi-box-arrow-in-right me-1"></i> Login
+      </a>
+
+      <a href="/register" class="btn btn-outline-light btn-custom">
+        <i class="bi bi-person-plus me-1"></i> Register
+      </a>
+    </div>
+  <% } else { %>
+    <div class="mt-4">
+      <a href="/products" class="btn btn-gradient btn-custom">
+        <i class="bi bi-cart me-1"></i> Explore Products
+      </a>
+    </div>
+  <% } %>
+
+</div>
+
+<!-- FEATURES -->
+<div class="features container pb-5">
+
+  <div class="row g-4">
+
+    <div class="col-md-4">
+      <div class="feature-card">
+        <i class="bi bi-box-seam feature-icon text-warning"></i>
+        <div class="feature-title mt-2">Product Management</div>
+        <p class="feature-text mt-2">
+          Easily manage products with a clean and powerful admin panel.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="feature-card">
+        <i class="bi bi-funnel feature-icon text-info"></i>
+        <div class="feature-title mt-2">Advanced Filters</div>
+        <p class="feature-text mt-2">
+          Search and filter products by category, size, and price instantly.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="feature-card">
+        <i class="bi bi-shield-lock feature-icon text-danger"></i>
+        <div class="feature-title mt-2">Secure System</div>
+        <p class="feature-text mt-2">
+          Authentication with role-based access for complete security.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</div>

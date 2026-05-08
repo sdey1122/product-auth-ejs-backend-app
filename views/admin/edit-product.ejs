@@ -1,0 +1,211 @@
+<style>
+  :root {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --input-bg: #334155;
+    --border-color: #475569;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --warning: #f59e0b;
+  }
+
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+  }
+
+  .box {
+    max-width: 900px;
+    margin: 60px auto;
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .form-label {
+    margin-top: 15px;
+    font-weight: 500;
+  }
+
+  .form-control,
+  .form-select {
+    background: var(--input-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 12px;
+    transition: 0.3s;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+    background: var(--input-bg);
+    color: #fff;
+  }
+
+  .input-group-text {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: 10px 0 0 10px;
+  }
+
+  .form-section-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 25px;
+  }
+
+  .preview-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  .preview-box {
+    text-align: center;
+  }
+
+  .preview-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+  }
+
+  .preview-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+  }
+
+  .btn-custom {
+    border-radius: 30px;
+    padding: 12px;
+    font-weight: 500;
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    border: none;
+    transition: 0.3s;
+  }
+
+  .btn-custom:hover {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    transform: translateY(-1px);
+  }
+</style>
+
+<div class="box">
+
+  <h3 class="text-center mb-4">
+    <i class="bi bi-pencil-square me-2"></i> Edit Product
+  </h3>
+
+  <form action="/admin/products/<%= product._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+
+    <div class="form-section-title">Basic Info</div>
+
+    <!-- NAME -->
+    <label class="form-label">Product Name</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-tag"></i></span>
+      <input type="text" name="name" class="form-control" value="<%= product.name %>" required>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <label class="form-label">Description</label>
+    <textarea name="description" class="form-control" rows="3"><%= product.description %></textarea>
+
+    <!-- CATEGORY -->
+    <label class="form-label">Category</label>
+    <select name="category" class="form-select">
+      <% ["Electronics", "Fashion", "Toys"].forEach(cat => { %>
+        <option value="<%= cat %>" <%= product.category === cat ? "selected" : "" %>>
+          <%= cat %>
+        </option>
+      <% }) %>
+    </select>
+
+    <div class="form-section-title">Attributes</div>
+
+    <!-- SIZE -->
+    <label class="form-label">Size</label>
+    <select name="size" class="form-select" multiple>
+      <% ["S","M","L","XL"].forEach(s => { %>
+        <option value="<%= s %>" <%= product.size.includes(s) ? "selected" : "" %>>
+          <%= s %>
+        </option>
+      <% }) %>
+    </select>
+
+    <!-- PRICE -->
+    <label class="form-label">Price</label>
+    <div class="input-group">
+      <span class="input-group-text">₹</span>
+      <input type="number" name="price" class="form-control" value="<%= product.price %>">
+    </div>
+
+    <!-- STOCK -->
+    <label class="form-label">Stock</label>
+    <input type="number" name="stock" class="form-control" value="<%= product.stock %>">
+
+    <div class="form-section-title">Media</div>
+
+    <!-- IMAGE -->
+    <label class="form-label">Change Image</label>
+    <input type="file" name="image" class="form-control" id="imageInput">
+
+    <!-- PREVIEWS -->
+    <div class="preview-wrapper">
+      <% if (product.image?.url) { %>
+        <div class="preview-box">
+          <img src="<%= product.image.url %>" class="preview-img">
+          <div class="preview-label">Current</div>
+        </div>
+      <% } %>
+
+      <div class="preview-box">
+        <img id="newPreview" class="preview-img" style="display:none;" />
+        <div class="preview-label">New</div>
+      </div>
+    </div>
+
+    <div class="form-section-title">Status</div>
+
+    <!-- STATUS -->
+    <label class="form-label">Status</label>
+    <select name="status" class="form-select">
+      <option value="active" <%= product.status === "active" ? "selected" : "" %>>Active</option>
+      <option value="inactive" <%= product.status === "inactive" ? "selected" : "" %>>Inactive</option>
+    </select>
+
+    <!-- BUTTON -->
+    <button class="btn btn-custom w-100 mt-4">
+      <i class="bi bi-save me-2"></i> Update Product
+    </button>
+
+  </form>
+
+</div>
+
+<script>
+  const input = document.getElementById("imageInput");
+  const preview = document.getElementById("newPreview");
+
+  input.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = "block";
+    }
+  });
+</script>

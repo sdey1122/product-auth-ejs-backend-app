@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --card-bg: #1e293b;
+      --input-bg: #334155;
+      --border-color: #475569;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e293b, #0f172a);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+    }
+
+    .box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card-bg);
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .brand span {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .form-label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+      background: var(--input-bg);
+      color: #fff;
+    }
+
+    .input-group-text {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .eye {
+      position: absolute;
+      right: 12px;
+      top: 38px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .btn-pill {
+      border-radius: 30px;
+      padding: 12px;
+      font-weight: 500;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border: none;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    .btn-pill:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+
+    .small-text {
+      font-size: 13px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: #a5b4fc;
+      text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <!-- BRAND -->
+  <div class="brand">
+    <i class="bi bi-box-seam me-1"></i> Admin <span>Panel</span>
+  </div>
+
+  <h4 class="text-center mb-4">
+    <i class="bi bi-person-plus me-2"></i> Register
+  </h4>
+
+  <!-- FLASH ERROR -->
+  <% if (typeof error !== "undefined" && error) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } %>
+
+  <form action="/auth/register" method="POST" id="registerForm">
+
+    <!-- NAME -->
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-person"></i>
+        </span>
+        <input type="text" name="name" class="form-control" required>
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-envelope"></i>
+        </span>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="mb-3 position-relative">
+      <label class="form-label">Password</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-lock"></i>
+        </span>
+        <input type="password" name="password" id="password" class="form-control" required>
+      </div>
+      <i class="bi bi-eye-slash eye" id="togglePass"></i>
+    </div>
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="mb-2 position-relative">
+      <label class="form-label">Confirm Password</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-lock"></i>
+        </span>
+        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" required>
+      </div>
+      <i class="bi bi-eye-slash eye" id="toggleConfirm"></i>
+    </div>
+
+    <!-- MATCH MESSAGE -->
+    <div id="matchMsg" class="small-text text-danger mb-2"></div>
+
+    <!-- BUTTON -->
+    <button class="btn btn-pill w-100 mt-2">
+      <i class="bi bi-person-check me-1"></i> Create Account
+    </button>
+
+    <!-- FOOTER -->
+    <div class="auth-footer">
+      Already have an account?
+      <a href="/login">Login</a>
+    </div>
+
+  </form>
+
+</div>
+
+<script>
+  const togglePass = document.getElementById("togglePass");
+  const password = document.getElementById("password");
+
+  togglePass.addEventListener("click", () => {
+    const type = password.type === "password" ? "text" : "password";
+    password.type = type;
+
+    togglePass.classList.toggle("bi-eye");
+    togglePass.classList.toggle("bi-eye-slash");
+  });
+
+  const toggleConfirm = document.getElementById("toggleConfirm");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+  toggleConfirm.addEventListener("click", () => {
+    const type = confirmPassword.type === "password" ? "text" : "password";
+    confirmPassword.type = type;
+
+    toggleConfirm.classList.toggle("bi-eye");
+    toggleConfirm.classList.toggle("bi-eye-slash");
+  });
+
+  const form = document.getElementById("registerForm");
+  const msg = document.getElementById("matchMsg");
+
+  form.addEventListener("submit", (e) => {
+    if (password.value !== confirmPassword.value) {
+      e.preventDefault();
+      msg.textContent = "Passwords do not match!";
+    }
+  });
+</script>
+
+</body>
+</html>
